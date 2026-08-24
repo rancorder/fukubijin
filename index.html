@@ -116,23 +116,18 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   .slide .botanical{display:none}
   .pagefoot{display:none}
   .hint{display:none}
-  /* neutralize the large inline top-margins from desktop spacing */
   .slide [style*="margin-top"]{margin-top:14px!important}
-
   .eyebrow{margin-bottom:14px;flex-wrap:wrap;gap:6px 10px}
   .eyebrow::before{width:18px}
   .eyebrow .en{font-size:15px}
   .eyebrow .jp{font-size:9.5px;letter-spacing:.18em}
-
   h1{font-size:clamp(25px,7.4vw,34px);line-height:1.32}
   h2{font-size:clamp(18px,5.3vw,24px);line-height:1.42}
   .lede{font-size:13px;line-height:1.85;margin-top:12px;max-width:none}
   .hairline{margin:14px 0}
-
   ul.clean{gap:9px}
   ul.clean li{font-size:13.5px;line-height:1.72;padding-left:19px}
   ul.clean li::before{top:.62em}
-
   .grid2,.grid3,.contrast{grid-template-columns:1fr;gap:11px}
   .panel{padding:14px 16px}
   .panel::before{width:28px}
@@ -140,7 +135,6 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   .panel p,.panel li{font-size:12.5px;line-height:1.66}
   .panel ul{gap:6px}
   .klabel{font-size:13px;margin-bottom:4px}
-
   .xbox{padding:16px}
   .xbox .tag{font-size:13px;margin-bottom:8px}
   .xbox p{font-size:15px}
@@ -152,14 +146,11 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   .readout{font-size:12px;margin-top:12px}
   .note-inline{font-size:11.5px;margin-top:12px;line-height:1.75}
   .pill{font-size:12px}
-
   .flow{gap:7px 6px}
   .chip{padding:9px 12px;font-size:12px}
   .arw{font-size:14px}
   .two-col{column-gap:16px}
   .two-col li{font-size:12.5px;margin-bottom:6px}
-
-  /* cover as centered portrait */
   .cover .inner{padding:calc(24px + env(safe-area-inset-top)) 24px 24px;justify-content:center;min-height:calc(100dvh - 90px)}
   .cover .drop-mark{position:absolute;width:52px;height:52px;right:20px;top:calc(18px + env(safe-area-inset-top))}
   .cover .en-brand{font-size:19px;margin-bottom:6px}
@@ -167,18 +158,12 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   .cover h1{font-size:clamp(30px,8.6vw,42px);margin-bottom:20px}
   .cover .tag{font-size:16px;line-height:1.75;max-width:none}
   .cover .meta{margin-top:30px;font-size:11.5px;line-height:2}
-
   .hud{gap:5px;bottom:calc(12px + env(safe-area-inset-bottom))}
   .hud button{padding:8px 11px;font-size:11px}
   .hud .prog{font-size:13px;min-width:50px}
 }
-@media (max-width:680px) and (min-height:720px){
-  /* roomy phones: gently center content vertically */
-  .slide{justify-content:center}
-}
+@media (max-width:680px) and (min-height:720px){.slide{justify-content:center}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.ripple{animation:none!important}}
-
-/* ===== presenter view ===== */
 #presenter{display:none}
 body.presenter-mode{overflow:hidden;background:#100E0C}
 body.presenter-mode #presenter{display:flex}
@@ -202,449 +187,51 @@ body.presenter-mode .stage,body.presenter-mode .hud,body.presenter-mode .hint,bo
 .pnotesbox{flex:1;display:flex;flex-direction:column;min-height:0;background:#17150F;border:1px solid #33372f;border-radius:6px;padding:16px 18px}
 .pnoteBody{margin-top:10px;overflow-y:auto;font-size:16px;line-height:1.95;color:#D6D0C2;white-space:pre-line}
 .pnoteBody strong{color:#E4B7AB;font-weight:700}
-.pnextbox{flex:none}
-.pnextbox .thumb{max-width:340px}
+.pnextbox{flex:none}.pnextbox .thumb{max-width:340px}
 @media (max-width:900px){.pmain{grid-template-columns:1fr;overflow-y:auto}.pnextbox .thumb{max-width:100%}.presenter header .ptitle{display:none}}
 </style>
 </head>
 <body>
-<div class="bar" id="bar"></div>
-<div class="stage" id="stage"></div>
-<div class="hud">
-  <button onclick="go(-1)">◀ 前へ</button>
-  <span class="prog" id="prog">01 / 14</span>
-  <button onclick="go(1)">次へ ▶</button>
-  <button onclick="toggleNotes()" title="発表者ノート (N)">ノート</button>
-  <button onclick="openPresenter()" title="発表者ビュー (P)">発表者</button>
-  <button onclick="fs()" title="全画面 (F)">全画面</button>
-</div>
+<div class="bar" id="bar"></div><div class="stage" id="stage"></div>
+<div class="hud"><button onclick="go(-1)">◀ 前へ</button><span class="prog" id="prog">01 / 13</span><button onclick="go(1)">次へ ▶</button><button onclick="toggleNotes()" title="発表者ノート (N)">ノート</button><button onclick="openPresenter()" title="発表者ビュー (P)">発表者</button><button onclick="fs()" title="全画面 (F)">全画面</button></div>
 <div class="hint">← → 移動 ／ P 発表者ビュー ／ N ノート ／ F 全画面</div>
-<aside class="notes" id="notes">
-  <button class="close" onclick="toggleNotes()">✕</button>
-  <h4>Presenter Note</h4>
-  <div class="nt-title" id="nt-title"></div>
-  <div class="nt-body" id="nt-body"></div>
-</aside>
-
-<section id="presenter" class="presenter">
-  <header>
-    <div class="pnum"><b id="pcur">1</b> / 14</div>
-    <div class="ptitle" id="ptitle"></div>
-    <div class="ptimer">経過 <span id="ptime">00:00</span> ・ <span id="pclock"></span></div>
-  </header>
-  <div class="pmain">
-    <div class="pcurrent">
-      <div class="plabel" id="curlabel">現在のスライド</div>
-      <div class="thumb" id="thumbCur"></div>
-      <div class="pnav"><button id="pprev">◀ 前へ</button><button id="pnext">次へ ▶</button></div>
-    </div>
-    <div class="pside">
-      <div class="pnotesbox">
-        <div class="plabel">台本 / スピーカーノート</div>
-        <div class="pnoteBody" id="pnote"></div>
-      </div>
-      <div class="pnextbox">
-        <div class="plabel" id="nextlabel">次のスライド</div>
-        <div class="thumb" id="thumbNext"></div>
-      </div>
-    </div>
-  </div>
-</section>
+<aside class="notes" id="notes"><button class="close" onclick="toggleNotes()">✕</button><h4>Presenter Note</h4><div class="nt-title" id="nt-title"></div><div class="nt-body" id="nt-body"></div></aside>
+<section id="presenter" class="presenter"><header><div class="pnum"><b id="pcur">1</b> / 14</div><div class="ptitle" id="ptitle"></div><div class="ptimer">経過 <span id="ptime">00:00</span> ・ <span id="pclock"></span></div></header><div class="pmain"><div class="pcurrent"><div class="plabel" id="curlabel">現在のスライド</div><div class="thumb" id="thumbCur"></div><div class="pnav"><button id="pprev">◀ 前へ</button><button id="pnext">次へ ▶</button></div></div><div class="pside"><div class="pnotesbox"><div class="plabel">台本 / スピーカーノート</div><div class="pnoteBody" id="pnote"></div></div><div class="pnextbox"><div class="plabel" id="nextlabel">次のスライド</div><div class="thumb" id="thumbNext"></div></div></div></div></section>
 <script>
-const LEAF = `<svg viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="1.4">
-<path d="M150 285 C150 200 150 120 150 40"/>
-<path d="M150 235 C110 220 82 188 74 150"/><path d="M150 205 C120 196 98 172 92 142"/>
-<path d="M150 175 C120 168 100 146 96 120"/><path d="M150 250 C190 236 218 205 226 168"/>
-<path d="M150 218 C182 210 205 186 210 158"/><path d="M150 188 C178 181 198 160 202 136"/>
-<path d="M150 158 C176 152 194 133 197 112"/></svg>`;
-const DROP = `<svg viewBox="0 0 100 100">
-<g fill="none" stroke="#8AA491" stroke-width="1">
-<circle class="ripple" cx="50" cy="54" r="30"/><circle class="ripple d2" cx="50" cy="54" r="30"/><circle class="ripple d3" cx="50" cy="54" r="30"/></g>
-<path d="M50 20 C50 20 33 42 33 55 a17 17 0 0 0 34 0 C67 42 50 20 50 20 Z" fill="#8AA491" opacity=".9"/>
-<path d="M44 50 a7 7 0 0 0 5 11" fill="none" stroke="#FBF8F2" stroke-width="1.4" stroke-linecap="round" opacity=".85"/></svg>`;
-
-const slides = [
-{html:`<div class="slide cover">
-  <div class="drop-mark">${DROP}</div><div class="botanical">${LEAF}</div>
-  <div class="inner">
-    <div class="en-brand">Fukubisui</div>
-    <div class="en-sub">J A P A N E S E &nbsp; B O T A N I C A L &nbsp; S K I N C A R E</div>
-    <h1>福美水　ご提案資料</h1>
-    <div class="tag">施術後ケア・店販・アメニティ導線をつくる<br>スキンケア提案</div>
-    <div class="meta"><span class="en">For</span>　＿＿＿＿＿＿＿＿＿ 様<br>
-      <span class="en">Date</span>　2026年＿月＿日　／　<span class="en">Presenter</span>　＿＿＿＿</div>
-  </div></div>`,
-title:"表紙",
-note:`つかみは商品ではなく“場の定義”。\n\n「本日はお時間ありがとうございます。福美人の〇〇です。本日は化粧水の売り込みというより、御社のお客様にどんな場面でお役立てできそうかを、一緒に確認できればと思っています」\n\n<strong>ここで売り込み臭を消す。</strong>御中名・日付・担当は事前に差し替える。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Purpose</span><span class="jp">本日の目的</span></div>
-  <div class="body">
-    <h2>商品紹介ではなく、<br>“御社のお客様に合う利用シーン”を一緒に確認する場です</h2>
-    <div class="hairline"></div>
-    <ul class="clean">
-      <li>成分やスペックの説明を聞いていただく時間ではありません。</li>
-      <li>御社のお客様の肌ケア・物販・アメニティの<b>現状</b>をうかがい、福美水が自然に置ける場面があるかを見極めます。</li>
-    </ul>
-    <div class="grid3" style="margin-top:26px">
-      <div class="panel"><span class="klabel">Check 01</span><p>肌ケア・物販・アメニティまわりの現状</p></div>
-      <div class="panel"><span class="klabel">Check 02</span><p>福美水が合いそうな利用シーン</p></div>
-      <div class="panel warm"><span class="klabel">Check 03</span><p>（サンプル後）導入アイテム・時期・数量感</p></div>
-    </div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>02</b> / 14</span></div></div>`,
-title:"本日の目的",
-note:`ゴールの握り。<strong>「今日は決めていただく場ではない」</strong>と明言してハードルを下げる。\n\n「本日は3点だけ確認させてください。①肌ケアや物販の今の形、②福美水が合いそうな場面、③もしサンプルを見ていただけるなら、どのアイテム・時期・数量が現実的か」\n\nCheck03を先に予告しておくと、後半のサンプル3点取得が自然になる。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">The Gap</span><span class="jp">業態共通の課題</span></div>
-  <div class="body">
-    <h2>「施術後・利用後に肌が敏感になる瞬間」は、<br>どの業態にもある</h2>
-    <div class="lede">レーザー・ピーリング・脱毛・カラー・パーマ、あるいは長旅のあと。肌が一時的にゆらぎやすくなる瞬間は、業態を問わず必ず訪れます。</div>
-    <div class="contrast" style="margin-top:24px">
-      <div class="xbox"><span class="tag">現場でよくある状態</span><p>高額な院内専売品を案内するか、<br>あるいは何もお渡ししないか、の二択。</p></div>
-      <div class="obox"><span class="tag">見えている歪み</span>
-        <p>“施術後ケアの標準解”が、<br>業態を横断して<span class="em">存在していない</span></p>
-        <div class="sub">敏感肌向け＝「守り」、美肌・エイジング＝「攻め」で分断され、施設側が全員に安心して案内できる共通ケアが空白のまま。</div></div>
-    </div>
-    <div class="readout"><span class="drop">◇</span><span>商談の入口はこの一言：「施術後に肌が敏感になったお客様へ、御社では何を案内されていますか？」</span></div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>03</b> / 14</span></div></div>`,
-title:"業態共通の課題",
-note:`成分説明から入らない。<strong>相手の現場の“空白”を先に言語化する。</strong>\n\n「施術やサービスのあと、肌が一時的に敏感になるお客様っていらっしゃいますよね。そういう方に、御社では今、何を案内されていますか？」\n\n相手に喋らせる。「高い専売品しかない」「特に何も」——どちらが出ても福美水を置く“理由”になる。歪みの核：<strong>施術後ケアに業態横断の共通言語がない。</strong>`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Redefined</span><span class="jp">福美水の再定義</span></div>
-  <div class="body">
-    <h2>「低刺激スキンケア」ではありません</h2>
-    <div class="contrast" style="margin-top:26px">
-      <div class="xbox"><span class="tag">こう見られがち</span><p>肌にやさしいだけの、<br>“守り”の敏感肌化粧水</p></div>
-      <div class="obox"><span class="tag">本当の価値</span>
-        <p>敏感肌の方が、施術後・美肌・エイジングという<br><span class="em">“攻めのケア”を諦めなくてよい</span>一本</p>
-        <div class="sub">＝ 施術後に一時的に敏感になったお客様へ、施設側が安心して案内できる「共通ケア」。</div></div>
-    </div>
-    <div class="readout"><span class="drop">◇</span><span>肌が弱い方でも前向きにケアを続けられる設計。「守り」と「攻め」の分断を、一本で埋めます。</span></div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>04</b> / 14</span></div></div>`,
-title:"福美水の再定義",
-note:`この資料の背骨。<strong>「低刺激だから安全」で終わらせない。</strong>\n\n「敏感肌向けって“守り”の印象が強いですよね。福美水は、肌が弱い方でも美肌ケアまで前向きに続けられる、という設計思想です」\n\nBtoBへの翻訳が要点：<strong>「施設が、施術後で敏感になったお客様に安心して案内できる共通ケア」。</strong>この一文が全業態に効く。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Formula</span><span class="jp">商品特徴</span></div>
-  <div class="body">
-    <h2>肌質を選びにくく、<br>“施設が全員に案内しやすい”設計</h2>
-    <div class="grid2" style="margin-top:24px">
-      <ul class="clean">
-        <li><b>日本由来の薬草成分</b>にこだわった処方<br>（ヨモギ・クマザサ・白樺樹液・トレハロース）</li>
-        <li><b>無香料・低刺激設計</b>で、香りや刺激が気になる方にも案内しやすい</li>
-        <li>男性・お子様・ご年配まで、<b>肌質を選びにくい</b></li>
-      </ul>
-      <ul class="clean">
-        <li>敏感肌向けでありながら、<span class="accent">美肌ケアまで</span>見据えた設計思想</li>
-        <li>業態ごとに使い方を変えられる<br>（施術後／アメニティ／頭皮・毛先／保湿）</li>
-        <li>1本で幅広い客層に出せるため、<b>在庫・説明の負担が軽い</b></li>
-      </ul>
-    </div>
-    <div class="note-inline">※ 医療的な効果・効能をうたう商品ではありません。「敏感肌の方にも使いやすい低刺激設計」としてご案内ください。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>05</b> / 14</span></div></div>`,
-title:"商品特徴",
-note:`特徴は“施設側のメリット”に翻訳して話す。\n\n「無香料で肌質を選びにくいので、施設側からすると“この人には出せない”が起きにくい。1本で幅広く案内できるぶん、在庫も説明もシンプルになります」\n\n<strong>薬機法（厳守）：</strong>「抗炎症」「治る」「ニキビに効く」等は言わない。「低刺激設計」「保湿ケアとして案内しやすい」に言い換える。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Trusted</span><span class="jp">実績・信頼材料</span></div>
-  <div class="body">
-    <h2>複数の販路で選ばれ続けているブランドです</h2>
-    <div class="grid2" style="margin-top:22px">
-      <div class="panel"><h3>物販・小売の実績</h3><ul>
-        <li>百貨店・セレクト小売での取り扱い</li>
-        <li>ドラッグストア・調剤薬局（皮膚科近接店を含む・長期）</li></ul></div>
-      <div class="panel"><h3>体験・インバウンド販路</h3><ul>
-        <li>高級老舗旅館でのアメニティ採用（長年）</li>
-        <li>免税・越境EC・海外ECなどインバウンド販路</li></ul></div>
-    </div>
-    <div class="note-inline">◇ スタンス：「有名店に入っているから置いてください」ではなく、<b>御社のお客様にとって自然に案内できる場面があるか</b>を一緒に確認したい、という姿勢で。<br>
-      <span class="pill">抽象化</span>具体施設名は原則出さず「高級老舗旅館」等で。&nbsp;<span class="pill v">未確認</span>累計本数など定量値は最終確定前のため商談では断定しない。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>06</b> / 14</span></div></div>`,
-title:"実績・信頼材料",
-note:`実績は“権威づけ”でなく“安心の担保”として軽く出し、すぐ相手軸に戻す。\n\n「百貨店やドラッグストア、調剤薬局、高級老舗旅館のアメニティなど、長く扱っていただいています。ただ今日は、有名店に入っているから、という話をしたいわけではなくて——」\n\n<strong>ルール：</strong>具体施設名は出さない。<strong>未確認：</strong>累計本数等の数値は最終確認前。断定を避ける。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Salon &amp; Clinic ❶</span><span class="jp">業態別提案 エステ／美容皮膚科・クリニック</span></div>
-  <div class="body">
-    <div class="grid2">
-      <div class="panel"><h3>現場課題</h3><ul>
-        <li>施術後、肌が一時的に敏感になるお客様への案内</li>
-        <li>院内専売品が高く、全員には案内しづらい</li>
-        <li>敏感肌のお客様に出せる共通の一本がない</li></ul></div>
-      <div class="panel"><h3>福美水が置ける理由</h3><ul>
-        <li>1SKUで全顧客に出せる「施術後の共通ケア」</li>
-        <li>無香料・低刺激で施術後の保湿ケアとして案内しやすい</li>
-        <li>院内物販・店販の新しい定番になり得る</li></ul></div>
-    </div>
-    <div class="grid2" style="margin-top:18px">
-      <div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul>
-        <li><b>化粧水（主力）</b>／施術後ケア・院内店販として</li>
-        <li>Q：施術後のホームケアは今どう案内？ 店販の売れ筋は？ 誰が説明する？</li></ul></div>
-      <div class="panel"><h3>サンプル後の確認ポイント</h3><ul>
-        <li>スタッフ・敏感肌のお客様の使用感</li>
-        <li>院内で案内しやすいか／価格・ロット感</li></ul></div>
-    </div>
-    <div class="note-inline"><span class="pill v">薬機法</span>クリニックでは特に注意。「治る／炎症を抑える／医療効果」は不可。「施術後の保湿ケアとして案内しやすい」に統一。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>07</b> / 14</span></div></div>`,
-title:"業態別❶ エステ／クリニック",
-note:`最優先（S）。施術後ケアの歪みが最濃。\n\n「フェイシャルやレーザーのあと、普段より刺激を感じやすいお客様、いらっしゃいますよね。今そういう方に、院内では何を案内されていますか？」\n\n刺す一言：<strong>「高額な専売品だけだとハードルが高い場面もある。福美水は施術後の保湿ケアとして幅広い方に案内しやすい選択肢になり得るか、見ていただきたい」</strong>\n\nクリニックは薬機法厳格。効能断定は一切しない。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Salon &amp; Clinic ❷</span><span class="jp">業態別提案 脱毛／日焼けサロン</span></div>
-  <div class="body">
-    <div class="grid2">
-      <div class="panel"><h3>現場課題</h3><ul>
-        <li>施術・日焼け後の乾燥、普段より敏感になる肌</li>
-        <li>男性客にも案内しやすい商品が必要</li>
-        <li>香りつき商品が苦手なお客様がいる</li></ul></div>
-      <div class="panel"><h3>福美水が置ける理由</h3><ul>
-        <li>無香料で、男性客にも案内しやすい</li>
-        <li>施術後の保湿導線を作りやすい業態</li>
-        <li>化粧水＋クリームジェルの組み合わせと好相性</li></ul></div>
-    </div>
-    <div class="grid2" style="margin-top:18px">
-      <div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul>
-        <li><b>化粧水＋クリームジェル</b>／施術後の保湿として</li>
-        <li>Q：施術後の保湿案内は？ 既存ジェルの不満は？ 男性客の比率は？</li></ul></div>
-      <div class="panel"><h3>サンプル後の確認ポイント</h3><ul>
-        <li>施術直後の使用感・べたつき・のび</li>
-        <li>男女問わず案内できるか／回転・単価に合うロット</li></ul></div>
-    </div>
-    <div class="note-inline">◇ ケア商品を案内する“理由”を最も作りやすい業態。化粧水だけでなくクリームジェルで初回ロットを広げる。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>08</b> / 14</span></div></div>`,
-title:"業態別❷ 脱毛／日焼け",
-note:`A。クリームジェルの主当て先。\n\n「脱毛や日焼けのあとって、乾燥したり敏感になったりしますよね。今、施術後の保湿って何か案内されてますか？」\n\n刺す一言：<strong>「脱毛・日焼け後はケア商品を案内する理由がとても作りやすい。化粧水に加えてクリームジェルも施術後の保湿導線として見ていただけます」</strong>\n\n男性客・無香料の相性を強調。既存ジェルの不満を引き出せると置換・補完の話に。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Ryokan ❸</span><span class="jp">業態別提案 高級旅館</span></div>
-  <div class="body">
-    <div class="grid2">
-      <div class="panel"><h3>現場課題</h3><ul>
-        <li>アメニティが「消耗コスト」で止まっている</li>
-        <li>気に入った客が買って帰る物販導線が弱い</li>
-        <li>香りの強いアメニティは好みが割れる</li></ul></div>
-      <div class="panel"><h3>福美水が置ける理由</h3><ul>
-        <li>無香料・肌質を選ばず、男女・家族・訪日客に体験させやすい</li>
-        <li>体験 → 客室売店・EC・お土産へ<b>物販化</b>できる</li>
-        <li>「日本の薬草・安心」の物語が土産価値になる</li></ul></div>
-    </div>
-    <div class="grid2" style="margin-top:18px">
-      <div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul>
-        <li><b>アメニティ化粧水 ＋ 売店/EC物販</b></li>
-        <li>Q：客室のスキンケアは？ 売店・ECの購入導線は？ 客単価アップの物販を強化したい？</li></ul></div>
-      <div class="panel"><h3>サンプル後の確認ポイント</h3><ul>
-        <li>宿の世界観・客層に合うか</li>
-        <li>アメニティ→物販の導線を組めるか／ロット</li></ul></div>
-    </div>
-    <div class="note-inline">◇ 「アメニティ＝コスト」を「客単価アップの入口」に読み替える。低価格帯・ビジホは対象外。世代が高いため訪問着地も柔軟に。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>09</b> / 14</span></div></div>`,
-title:"業態別❸ 高級旅館",
-note:`A。歪み「体験はあるのに物販に化けていない」を突く。\n\n「アメニティって消耗品扱いになりがちですが、実はお客様が滞在中に商品を体験する大事な接点ですよね。今、客室や売店でスキンケアは扱われていますか？」\n\n刺す一言：<strong>「無香料で肌質を選ばないので、男性やご家族連れにも。アメニティで体験して、気に入った方が売店やECで買って帰る導線を作れる」</strong>\n\n低価格帯・ビジホは狙わない。旅館は訪問着地に切り替え可。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Hair Salon ❹</span><span class="jp">業態別提案 美容室</span></div>
-  <div class="body">
-    <div class="grid2">
-      <div class="panel"><h3>現場課題</h3><ul>
-        <li>カラー・パーマ後の頭皮／毛先の乾燥・刺激感</li>
-        <li>店販が伸び悩む／スタッフ間で温度差</li>
-        <li>メンズ客への頭皮ケア提案が弱い</li></ul></div>
-      <div class="panel"><h3>福美水が置ける理由</h3><ul>
-        <li>美容液・オイル・スカルプでホームケア導線を作れる</li>
-        <li>無香料で、メンズ頭皮ケアの切り口にも合う</li>
-        <li>施術後のホームケアとして店販に載せやすい</li></ul></div>
-    </div>
-    <div class="grid2" style="margin-top:18px">
-      <div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul>
-        <li><b>美容液・オイル（＋スカルプ／メンズ頭皮）</b></li>
-        <li>Q：カラー・パーマ後のケア相談は？ 店販の売れ筋カテゴリは？ メンズ提案は？</li></ul></div>
-      <div class="panel"><h3>サンプル後の確認ポイント</h3><ul>
-        <li>スタッフが説明しやすい設計か</li>
-        <li>店販カテゴリに載せられるか／ロット</li></ul></div>
-    </div>
-    <div class="note-inline">◇ 化粧水“単体”ではなく、美容液・オイル・スカルプを含めた「カラー／パーマ後のホームケア導線」として見せる。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>10</b> / 14</span></div></div>`,
-title:"業態別❹ 美容室",
-note:`A。美容液・オイル・スカルプの当て先。\n\n「カラーやパーマのあと、頭皮や毛先の乾燥を気にされるお客様、いらっしゃいますよね。今そういう方に、ホームケア商品は案内されていますか？」\n\n刺す一言：<strong>「化粧水単体でなく、美容液・オイル・スカルプまで含めてカラー・パーマ後のホームケア導線として見ていただけます」</strong>\n\nメンズ頭皮ケアは無香料が効く切り口。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Sampling</span><span class="jp">サンプル送付の進め方</span></div>
-  <div class="body">
-    <h2>サンプルは「ばらまき」ではなく、<br>導入検討の“入口”です</h2>
-    <div class="lede">単なる無料配布にすると、商談化しないリードだけが増えます。送る前に“置く理由”を握り、送付の交換条件として次の3点を必ずうかがいます。</div>
-    <div class="grid3" style="margin-top:24px">
-      <div class="panel warm"><span class="klabel">01</span><h3 style="margin:0 0 8px">導入希望アイテム</h3><p>化粧水／クリームジェル／美容液・オイル／スカルプ ほか</p></div>
-      <div class="panel warm"><span class="klabel">02</span><h3 style="margin:0 0 8px">導入希望時期</h3><p>すぐ／1〜2か月以内／季節キャンペーン／入れ替え時期</p></div>
-      <div class="panel warm"><span class="klabel">03</span><h3 style="margin:0 0 8px">導入希望数量</h3><p>店舗テスト／スタッフ利用／一部顧客案内／店販在庫</p></div>
-    </div>
-    <div class="note-inline">◇ 同封：商品概要と導入の流れをまとめたA4資料／手紙（確認済みPDF）。&nbsp;<span class="pill">Campaign</span>ケース購入でミニボトル／2ボトルプレゼント＝初回ロットの後押しに。</div>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>11</b> / 14</span></div></div>`,
-title:"サンプル送付の進め方",
-note:`案件の勝ち筋。<strong>3点取得を送付の“交換条件”にする。</strong>\n\n「ただお送りするのではなく、御社で導入余地があるかを確認したうえでお送りしたいんです。今の仮でかまいませんので、3点だけ——どのアイテムが合いそうか、いつ頃が現実的か、どのくらいの数量から試せそうか」\n\n<strong>3点が取れない相手には基本送らない／温度を確認。</strong>キャンペーンは初回ロット確定の決め手に。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Journey</span><span class="jp">導入検討ステップ</span></div>
-  <div class="body">
-    <h2>サンプルから商談化までの流れ</h2>
-    <div class="flow" style="margin-top:28px">
-      <span class="chip">サンプル確認</span><span class="arw">→</span>
-      <span class="chip">スタッフ使用</span><span class="arw">→</span>
-      <span class="chip">お客様反応確認</span><span class="arw">→</span>
-      <span class="chip">使用感ヒアリング</span><span class="arw">→</span>
-      <span class="chip hot">導入アイテム／時期／数量 整理</span><span class="arw">→</span>
-      <span class="chip hot">商談化</span>
-    </div>
-    <div class="hairline" style="margin-top:30px"></div>
-    <ul class="clean">
-      <li>スタッフ様ご自身と、<b>実際に肌が敏感なお客様</b>で試していただくのが理想です。</li>
-      <li>使用感確認は、<b>サンプル到着後の日程を必ずその場で握ります</b>（15分程度）。</li>
-      <li>整理がついた段階で、オンライン商談 →（福美人側で最終のご相談）へ進みます。</li>
-    </ul>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>12</b> / 14</span></div></div>`,
-title:"導入検討ステップ",
-note:`流れを見せて“次の一歩”を具体化する。\n\n「まずサンプルを見ていただいて、可能ならスタッフ様や、肌が敏感なお客様の反応も。そのうえで使用感を確認するお時間を15分ほど」\n\n<strong>ここで使用感確認日を必ず握る。</strong>日程が握れないリードは温度低。後段（SUトスアップ→福美人クロージング）は相手に見せず流れだけ共有。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Checklist</span><span class="jp">ヒアリング項目</span></div>
-  <div class="body">
-    <h2>商談中に確認すること</h2>
-    <div class="grid2" style="margin-top:20px">
-      <div class="panel"><h3>現状把握</h3>
-        <ul class="two-col" style="list-style:none;padding:0">
-          <li>現在の施術後ケア</li><li>既存の店販商品</li>
-          <li>敏感肌のお客様の有無</li><li>商品説明のしやすさ</li></ul></div>
-      <div class="panel warm"><h3>導入3点＋日程</h3>
-        <ul class="two-col" style="list-style:none;padding:0">
-          <li>導入アイテム</li><li>導入時期</li>
-          <li>導入数量</li><li>使用感確認日</li></ul></div>
-    </div>
-    <div class="hairline"></div>
-    <span class="klabel">Temperature — 商談後に記録する温度感ランク</span>
-    <ul class="clean" style="margin-top:8px">
-      <li><b>A</b>：導入時期・数量まで具体化　／　<b>B</b>：使用感確認後に判断</li>
-      <li><b>C</b>：サンプル希望のみ　／　<b>D</b>：情報収集のみ　／　<span class="accent">NG</span>：導入余地なし</li>
-    </ul>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>13</b> / 14</span></div></div>`,
-title:"ヒアリング項目",
-note:`相手に読み上げる用でなく、<strong>商談者の手元チェックリスト</strong>。\n\n会話の中で自然に埋める。右側（アイテム・時期・数量・使用感確認日）はサンプル送付の可否を分ける必須4点。\n\n商談後は必ず温度感ランク（A〜NG）を記録。Aは即トスアップ、Bは使用感確認後、C/Dは追客、NGは除外。基準を毎回同じにすると業態別の反応率が比較できる。`},
-
-{html:`<div class="slide"><div class="eyebrow"><span class="en">Next Step</span><span class="jp">次のアクション</span></div>
-  <div class="body">
-    <h2>本日のまとめと、次の一歩</h2>
-    <div class="grid3" style="margin-top:24px">
-      <div class="panel"><span class="klabel">Step 01</span><h3 style="margin:0 0 8px">サンプル送付</h3><p>ご相談したアイテム・数量で、御社宛に送付します。</p></div>
-      <div class="panel warm"><span class="klabel">Step 02</span><h3 style="margin:0 0 8px">使用感確認日</h3><p>〇/〇・〇/〇・〇/〇 で15分。スタッフ様の反応も確認します。</p></div>
-      <div class="panel"><span class="klabel">Step 03</span><h3 style="margin:0 0 8px">導入検討</h3><p>アイテム・時期・数量の3点を整理し、オンライン商談へ。</p></div>
-    </div>
-    <div class="hairline" style="margin-top:28px"></div>
-    <ul class="clean">
-      <li>本日の内容だと、御社では<b>「＿＿＿＿の場面」</b>で福美水を試していただくのが一番自然だと感じました。</li>
-      <li>まずはサンプルをご確認いただき、使用感確認の日程だけ、この場で仮に押さえさせてください。</li>
-    </ul>
-  </div>
-  <div class="pagefoot"><span class="lab">Fukubisui ／ 福美人株式会社</span><span class="n"><b>14</b> / 14</span></div></div>`,
-title:"次のアクション",
-note:`クロージングは“決断”でなく“次の日程”を取る。\n\n「本日のお話だと、御社の場合は〇〇の場面で試していただくのが一番自然だと感じました。まずサンプルをお送りするので、使用感を確認するお時間だけ、仮でこの場で押さえさせてください」\n\n<strong>最終ゴールは「サンプル送付＋使用感確認日の確定＋3点」。</strong>ここまで取れれば商談化はほぼ握れている。`}
+const LEAF=`<svg viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M150 285 C150 200 150 120 150 40"/><path d="M150 235 C110 220 82 188 74 150"/><path d="M150 205 C120 196 98 172 92 142"/><path d="M150 175 C120 168 100 146 96 120"/><path d="M150 250 C190 236 218 205 226 168"/><path d="M150 218 C182 210 205 186 210 158"/><path d="M150 188 C178 181 198 160 202 136"/><path d="M150 158 C176 152 194 133 197 112"/></svg>`;
+const DROP=`<svg viewBox="0 0 100 100"><g fill="none" stroke="#8AA491" stroke-width="1"><circle class="ripple" cx="50" cy="54" r="30"/><circle class="ripple d2" cx="50" cy="54" r="30"/><circle class="ripple d3" cx="50" cy="54" r="30"/></g><path d="M50 20 C50 20 33 42 33 55 a17 17 0 0 0 34 0 C67 42 50 20 50 20 Z" fill="#8AA491" opacity=".9"/><path d="M44 50 a7 7 0 0 0 5 11" fill="none" stroke="#FBF8F2" stroke-width="1.4" stroke-linecap="round" opacity=".85"/></svg>`;
+const slides=[
+{html:`<div class="slide cover"><div class="drop-mark">${DROP}</div><div class="botanical">${LEAF}</div><div class="inner"><div class="en-brand">Fukubisui</div><div class="en-sub">J A P A N E S E &nbsp; B O T A N I C A L &nbsp; S K I N C A R E</div><h1>福美水　ご提案資料</h1><div class="tag">施術後ケア・店販・アメニティ導線をつくる<br>スキンケア提案</div><div class="meta"><span class="en">For</span>　＿＿＿＿＿＿＿＿＿ 様<br><span class="en">Date</span>　2026年＿月＿日　／　<span class="en">Presenter</span>　＿＿＿＿</div></div></div>`,title:"表紙",note:`つかみは商品ではなく“場の定義”。\n\n「本日はお時間ありがとうございます。福美人の〇〇です。本日は化粧水の売り込みというより、御社のお客様にどんな場面でお役立てできそうかを、一緒に確認できればと思っています」\n\n<strong>ここで売り込み臭を消す。</strong>御中名・日付・担当は事前に差し替える。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Purpose</span><span class="jp">本日の目的</span></div><div class="body"><h2>商品紹介ではなく、<br>“御社のお客様に合う利用シーン”を一緒に確認する場です</h2><div class="hairline"></div><ul class="clean"><li>成分やスペックの説明を聞いていただく時間ではありません。</li><li>御社のお客様の肌ケア・物販・アメニティの<b>現状</b>をうかがい、福美水が自然に置ける場面があるかを見極めます。</li></ul><div class="grid3" style="margin-top:26px"><div class="panel"><span class="klabel">Check 01</span><p>肌ケア・物販・アメニティまわりの現状</p></div><div class="panel"><span class="klabel">Check 02</span><p>福美水が合いそうな利用シーン</p></div><div class="panel warm"><span class="klabel">Check 03</span><p>（サンプル後）導入アイテム・時期・数量感</p></div></div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>02</b> / 14</span></div></div>`,title:"本日の目的",note:`ゴールの握り。<strong>「今日は決めていただく場ではない」</strong>と明言してハードルを下げる。\n\n「本日は3点だけ確認させてください。①肌ケアや物販の今の形、②福美水が合いそうな場面、③もしサンプルを見ていただけるなら、どのアイテム・時期・数量が現実的か」\n\nCheck03を先に予告しておくと、後半のサンプル3点取得が自然になる。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">The Gap</span><span class="jp">業態共通の課題</span></div><div class="body"><h2>「施術後・利用後に肌が敏感になる瞬間」は、<br>多くの業態で起こり得る</h2><div class="lede">レーザー・ピーリング・脱毛・カラー・パーマ、あるいは長旅のあと。肌が一時的にゆらぎやすくなる場面は、業態ごとに生じることがあります。</div><div class="contrast" style="margin-top:24px"><div class="xbox"><span class="tag">現場でよくある状態</span><p>高額な院内専売品を案内するか、<br>あるいは何もお渡ししないか、の二択。</p></div><div class="obox"><span class="tag">見えている歪み</span><p>“施術後ケアの標準解”が、<br>業態を横断すると<span class="em">定まりにくい</span></p><div class="sub">敏感肌向け＝「守り」、美肌・エイジング＝「攻め」で分かれやすく、施設側が幅広いお客様へ案内しやすい共通ケアを設計しづらい状態があります。</div></div></div><div class="readout"><span class="drop">◇</span><span>商談の入口はこの一言：「施術後に肌が敏感になったお客様へ、御社では何を案内されていますか？」</span></div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>03</b> / 14</span></div></div>`,title:"業態共通の課題",note:`成分説明から入らない。<strong>相手の現場の“空白”を先に言語化する。</strong>\n\n「施術やサービスのあと、肌が一時的に敏感になるお客様っていらっしゃいますよね。そういう方に、御社では今、何を案内されていますか？」\n\n相手に喋らせる。「高い専売品しかない」「特に何も」——どちらが出ても福美水を置く“理由”になる。歪みの核：<strong>施術後ケアに業態横断の共通言語が定まりにくい。</strong>`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Redefined</span><span class="jp">福美水の再定義</span></div><div class="body"><h2>「低刺激スキンケア」ではありません</h2><div class="contrast" style="margin-top:26px"><div class="xbox"><span class="tag">こう見られがち</span><p>肌にやさしいだけの、<br>“守り”の敏感肌化粧水</p></div><div class="obox"><span class="tag">本当の価値</span><p>敏感肌の方が、施術後・美肌・エイジングという<br><span class="em">“攻めのケア”を諦めなくてよい</span>一本</p><div class="sub">＝ 施術後に一時的に敏感になったお客様へ、施設側が案内候補として検討しやすい「共通ケア」。</div></div></div><div class="readout"><span class="drop">◇</span><span>肌が弱い方でも前向きにケアを続けられる設計。「守り」と「攻め」の分断を、一本で埋めます。</span></div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>04</b> / 14</span></div></div>`,title:"福美水の再定義",note:`この資料の背骨。<strong>「低刺激だから安全」で終わらせない。</strong>\n\n「敏感肌向けって“守り”の印象が強いですよね。福美水は、肌が弱い方でも美肌ケアまで前向きに続けられる、という設計思想です」\n\nBtoBへの翻訳が要点：<strong>「施設が、施術後で敏感になったお客様への案内候補として検討しやすい共通ケア」。</strong>`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Formula</span><span class="jp">商品特徴</span></div><div class="body"><h2>肌質を選びにくく、<br>“施設が幅広いお客様に案内しやすい”設計</h2><div class="grid2" style="margin-top:24px"><ul class="clean"><li><b>日本由来の薬草成分</b>にこだわった処方<br>（ヨモギ・クマザサ・白樺樹液・トレハロース）</li><li><b>無香料・低刺激設計</b>で、香りや刺激が気になる方にも案内しやすい</li><li>男性・お子様・ご年配まで、<b>肌質を選びにくい</b></li></ul><ul class="clean"><li>敏感肌向けでありながら、<span class="accent">美肌ケアまで</span>見据えた設計思想</li><li>業態ごとに使い方を変えられる<br>（施術後／アメニティ／頭皮・毛先／保湿）</li><li>1本で幅広い客層に案内しやすいため、<b>在庫・説明の負担を抑えやすい</b></li></ul></div><div class="note-inline">※ 医療的な効果・効能をうたう商品ではありません。「敏感肌の方にも使いやすい低刺激設計」としてご案内ください。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>05</b> / 14</span></div></div>`,title:"商品特徴",note:`特徴は“施設側のメリット”に翻訳して話す。\n\n「無香料で肌質を選びにくく、幅広いお客様への案内候補として検討しやすい。1本で案内しやすいぶん、在庫も説明もシンプルにしやすいです」\n\n<strong>薬機法（厳守）：</strong>「抗炎症」「治る」「ニキビに効く」等は言わない。「低刺激設計」「保湿ケアとして案内しやすい」に言い換える。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Trusted</span><span class="jp">実績・信頼材料</span></div><div class="body"><h2>複数の販路で選ばれ続けているブランドです</h2><div class="grid2" style="margin-top:22px"><div class="panel"><h3>物販・小売の実績</h3><ul><li>百貨店・セレクト小売での取り扱い</li><li>ドラッグストア・調剤薬局（皮膚科近接店を含む・長期）</li></ul></div><div class="panel"><h3>体験・インバウンド販路</h3><ul><li>高級老舗旅館でのアメニティ採用（長年）</li><li>免税・越境EC・海外ECなどインバウンド販路</li></ul></div></div><div class="note-inline">◇ スタンス：「有名店に入っているから置いてください」ではなく、<b>御社のお客様にとって自然に案内できる場面があるか</b>を一緒に確認したい、という姿勢で。<br><span class="pill">抽象化</span>具体施設名は原則出さず「高級老舗旅館」等で。&nbsp;<span class="pill v">未確認</span>累計本数など定量値は最終確定前のため商談では断定しない。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>06</b> / 14</span></div></div>`,title:"実績・信頼材料",note:`実績は“権威づけ”でなく“安心の担保”として軽く出し、すぐ相手軸に戻す。\n\n「百貨店やドラッグストア、調剤薬局、高級老舗旅館のアメニティなど、長く扱っていただいています。ただ今日は、有名店に入っているから、という話をしたいわけではなくて——」\n\n<strong>ルール：</strong>具体施設名は出さない。<strong>未確認：</strong>累計本数等の数値は最終確認前。断定を避ける。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Salon &amp; Clinic ❶</span><span class="jp">業態別提案 エステ／美容皮膚科・クリニック</span></div><div class="body"><div class="grid2"><div class="panel"><h3>現場課題</h3><ul><li>施術後、肌が一時的に敏感になるお客様への案内</li><li>院内専売品が高く、全員には案内しづらい</li><li>敏感肌のお客様に出せる共通の一本がない</li></ul></div><div class="panel"><h3>福美水が置ける理由</h3><ul><li>1SKUで幅広いお客様に案内しやすい「施術後の共通ケア」</li><li>無香料・低刺激で施術後の保湿ケアとして案内しやすい</li><li>院内物販・店販の新しい定番になり得る</li></ul></div></div><div class="grid2" style="margin-top:18px"><div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul><li><b>化粧水（主力）</b>／施術後ケア・院内店販として</li><li>Q：施術後のホームケアは今どう案内？ 店販の売れ筋は？ 誰が説明する？</li></ul></div><div class="panel"><h3>サンプル後の確認ポイント</h3><ul><li>スタッフの使用感／施設側が案内候補として検討しやすいか</li><li>価格・ロット感</li></ul></div></div><div class="note-inline"><span class="pill v">薬機法</span>クリニックでは特に注意。「治る／炎症を抑える／医療効果」は不可。「施術後の保湿ケアとして案内しやすい」に統一。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>07</b> / 14</span></div></div>`,title:"業態別❶ エステ／クリニック",note:`最優先（S）。施術後ケアの歪みが最濃。\n\n「フェイシャルやレーザーのあと、普段より刺激を感じやすいお客様、いらっしゃいますよね。今そういう方に、院内では何を案内されていますか？」\n\n刺す一言：<strong>「高額な専売品だけだとハードルが高い場面もある。福美水は施術後の保湿ケアとして幅広い方に案内しやすい選択肢になり得るか、見ていただきたい」</strong>\n\nクリニックは薬機法厳格。効能断定は一切しない。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Salon &amp; Clinic ❷</span><span class="jp">業態別提案 脱毛／日焼けサロン</span></div><div class="body"><div class="grid2"><div class="panel"><h3>現場課題</h3><ul><li>施術・日焼け後の乾燥、普段より敏感になる肌</li><li>男性客にも案内しやすい商品が必要</li><li>香りつき商品が苦手なお客様がいる</li></ul></div><div class="panel"><h3>福美水が置ける理由</h3><ul><li>無香料で、男性客にも案内しやすい</li><li>施術後の保湿導線を作りやすい業態</li><li>化粧水＋クリームジェルの組み合わせと好相性</li></ul></div></div><div class="grid2" style="margin-top:18px"><div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul><li><b>化粧水＋クリームジェル</b>／施術後の保湿として</li><li>Q：施術後の保湿案内は？ 既存ジェルの不満は？ 男性客の比率は？</li></ul></div><div class="panel"><h3>サンプル後の確認ポイント</h3><ul><li>スタッフの使用感・べたつき・のび</li><li>男女問わず案内しやすいか／回転・単価に合うロット</li></ul></div></div><div class="note-inline">◇ ケア商品を案内する“理由”を作りやすい業態。化粧水だけでなくクリームジェルも初回提案候補に。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>08</b> / 14</span></div></div>`,title:"業態別❷ 脱毛／日焼け",note:`A。クリームジェルの主当て先。\n\n「脱毛や日焼けのあとって、乾燥したり敏感になったりしますよね。今、施術後の保湿って何か案内されてますか？」\n\n刺す一言：<strong>「脱毛・日焼け後はケア商品を案内する理由を作りやすい。化粧水に加えてクリームジェルも施術後の保湿導線として見ていただけます」</strong>\n\n男性客・無香料の相性を強調。既存ジェルの不満を引き出せると置換・補完の話に。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Ryokan ❸</span><span class="jp">業態別提案 高級旅館</span></div><div class="body"><div class="grid2"><div class="panel"><h3>現場課題</h3><ul><li>アメニティが「消耗コスト」で止まっている</li><li>気に入った客が買って帰る物販導線が弱い</li><li>香りの強いアメニティは好みが割れる</li></ul></div><div class="panel"><h3>福美水が置ける理由</h3><ul><li>無香料・肌質を選びにくく、男女・家族・訪日客に体験してもらいやすい</li><li>体験 → 客室売店・EC・お土産へ<b>物販化</b>できる</li><li>「日本の薬草」という物語が土産価値につながりやすい</li></ul></div></div><div class="grid2" style="margin-top:18px"><div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul><li><b>アメニティ化粧水 ＋ 売店/EC物販</b></li><li>Q：客室のスキンケアは？ 売店・ECの購入導線は？ 客単価アップの物販を強化したい？</li></ul></div><div class="panel"><h3>サンプル後の確認ポイント</h3><ul><li>宿の世界観・客層に合うか</li><li>アメニティ→物販の導線を組めるか／ロット</li></ul></div></div><div class="note-inline">◇ 「アメニティ＝コスト」を「客単価アップの入口」に読み替える。低価格帯・ビジホは対象外。世代が高いため訪問着地も柔軟に。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>09</b> / 14</span></div></div>`,title:"業態別❸ 高級旅館",note:`A。歪み「体験はあるのに物販に化けていない」を突く。\n\n「アメニティって消耗品扱いになりがちですが、実はお客様が滞在中に商品を体験する大事な接点ですよね。今、客室や売店でスキンケアは扱われていますか？」\n\n刺す一言：<strong>「無香料で肌質を選びにくいので、男性やご家族連れにも案内候補として検討しやすい。アメニティで体験して、気に入った方が売店やECで買って帰る導線を作れる」</strong>\n\n低価格帯・ビジホは狙わない。旅館は訪問着地に切り替え可。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Hair Salon ❹</span><span class="jp">業態別提案 美容室</span></div><div class="body"><div class="grid2"><div class="panel"><h3>現場課題</h3><ul><li>カラー・パーマ後の頭皮／毛先の乾燥・刺激感</li><li>店販が伸び悩む／スタッフ間で温度差</li><li>メンズ客への頭皮ケア提案が弱い</li></ul></div><div class="panel"><h3>福美水が置ける理由</h3><ul><li>美容液・オイル・スカルプでホームケア導線を作れる</li><li>無香料で、メンズ頭皮ケアの切り口にも合う</li><li>施術後のホームケアとして店販に載せやすい</li></ul></div></div><div class="grid2" style="margin-top:18px"><div class="panel warm"><h3>提案アイテム・聞くこと</h3><ul><li><b>美容液・オイル（＋スカルプ／メンズ頭皮）</b></li><li>Q：カラー・パーマ後のケア相談は？ 店販の売れ筋カテゴリは？ メンズ提案は？</li></ul></div><div class="panel"><h3>サンプル後の確認ポイント</h3><ul><li>スタッフが説明しやすい設計か</li><li>店販カテゴリに載せられるか／ロット</li></ul></div></div><div class="note-inline">◇ 化粧水“単体”ではなく、美容液・オイル・スカルプを含めた「カラー／パーマ後のホームケア導線」として見せる。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>10</b> / 14</span></div></div>`,title:"業態別❹ 美容室",note:`A。美容液・オイル・スカルプの当て先。\n\n「カラーやパーマのあと、頭皮や毛先の乾燥を気にされるお客様、いらっしゃいますよね。今そういう方に、ホームケア商品は案内されていますか？」\n\n刺す一言：<strong>「化粧水単体でなく、美容液・オイル・スカルプまで含めてカラー・パーマ後のホームケア導線として見ていただけます」</strong>\n\nメンズ頭皮ケアは無香料が効く切り口。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Sampling</span><span class="jp">サンプル送付の進め方</span></div><div class="body"><h2>サンプルは「ばらまき」ではなく、<br>導入検討の“入口”です</h2><div class="lede">単なる無料配布にすると、商談化しないリードだけが増えます。送る前に“置く理由”を握り、送付の交換条件として次の3点を必ずうかがいます。</div><div class="grid3" style="margin-top:24px"><div class="panel warm"><span class="klabel">01</span><h3 style="margin:0 0 8px">導入希望アイテム</h3><p>化粧水／クリームジェル／美容液・オイル／スカルプ ほか</p></div><div class="panel warm"><span class="klabel">02</span><h3 style="margin:0 0 8px">導入希望時期</h3><p>すぐ／1〜2か月以内／季節キャンペーン／入れ替え時期</p></div><div class="panel warm"><span class="klabel">03</span><h3 style="margin:0 0 8px">導入希望数量</h3><p>店舗テスト／スタッフ利用／一部顧客案内／店販在庫</p></div></div><div class="note-inline">◇ 同封：商品概要と導入の流れをまとめたA4資料／手紙（確認済みPDF）。&nbsp;<span class="pill">Campaign</span>ケース購入でミニボトル／2ボトルプレゼント＝初回ロットの後押しに。</div></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>11</b> / 14</span></div></div>`,title:"サンプル送付の進め方",note:`案件の勝ち筋。<strong>3点取得を送付の“交換条件”にする。</strong>\n\n「ただお送りするのではなく、御社で導入余地があるかを確認したうえでお送りしたいんです。今の仮でかまいませんので、3点だけ——どのアイテムが合いそうか、いつ頃が現実的か、どのくらいの数量から試せそうか」\n\n<strong>3点が取れない相手には基本送らない／温度を確認。</strong>キャンペーンは初回ロット確定の決め手に。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Journey</span><span class="jp">導入検討ステップ</span></div><div class="body"><h2>サンプルから商談化までの流れ</h2><div class="flow" style="margin-top:28px"><span class="chip">サンプル確認</span><span class="arw">→</span><span class="chip">スタッフ使用</span><span class="arw">→</span><span class="chip">案内可否の検討</span><span class="arw">→</span><span class="chip">使用感ヒアリング</span><span class="arw">→</span><span class="chip hot">導入アイテム／時期／数量 整理</span><span class="arw">→</span><span class="chip hot">商談化</span></div><div class="hairline" style="margin-top:30px"></div><ul class="clean"><li>まずはスタッフ様ご自身で使用感をご確認いただき、<b>施設側の運用・判断に沿って</b>お客様への案内可否をご検討ください。</li><li>使用感確認は、<b>サンプル到着後の日程を必ずその場で握ります</b>（15分程度）。</li><li>整理がついた段階で、オンライン商談 →（福美人側で最終のご相談）へ進みます。</li></ul></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>12</b> / 14</span></div></div>`,title:"導入検討ステップ",note:`流れを見せて“次の一歩”を具体化する。\n\n「まずサンプルをスタッフ様に見ていただいて、そのうえで御社の運用に沿ってお客様への案内可否をご検討ください。使用感を確認するお時間を15分ほどお願いします」\n\n<strong>ここで使用感確認日を必ず握る。</strong>日程が握れないリードは温度低。後段（SUトスアップ→福美人クロージング）は相手に見せず流れだけ共有。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Checklist</span><span class="jp">ヒアリング項目</span></div><div class="body"><h2>商談中に確認すること</h2><div class="grid2" style="margin-top:20px"><div class="panel"><h3>現状把握</h3><ul class="two-col" style="list-style:none;padding:0"><li>現在の施術後ケア</li><li>既存の店販商品</li><li>敏感肌のお客様の有無</li><li>商品説明のしやすさ</li></ul></div><div class="panel warm"><h3>導入3点＋日程</h3><ul class="two-col" style="list-style:none;padding:0"><li>導入アイテム</li><li>導入時期</li><li>導入数量</li><li>使用感確認日</li></ul></div></div><div class="hairline"></div><span class="klabel">Temperature — 商談後に記録する温度感ランク</span><ul class="clean" style="margin-top:8px"><li><b>A</b>：導入時期・数量まで具体化　／　<b>B</b>：使用感確認後に判断</li><li><b>C</b>：サンプル希望のみ　／　<b>D</b>：情報収集のみ　／　<span class="accent">NG</span>：導入余地なし</li></ul></div><div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>13</b> / 14</span></div></div>`,title:"ヒアリング項目",note:`相手に読み上げる用でなく、<strong>商談者の手元チェックリスト</strong>。\n\n会話の中で自然に埋める。右側（アイテム・時期・数量・使用感確認日）はサンプル送付の可否を分ける必須4点。\n\n商談後は必ず温度感ランク（A〜NG）を記録。Aは即トスアップ、Bは使用感確認後、C/Dは追客、NGは除外。基準を毎回同じにすると業態別の反応率が比較できる。`},
+{html:`<div class="slide"><div class="eyebrow"><span class="en">Next Step</span><span class="jp">次のアクション</span></div><div class="body"><h2>本日のまとめと、次の一歩</h2><div class="grid3" style="margin-top:24px"><div class="panel"><span class="klabel">Step 01</span><h3 style="margin:0 0 8px">サンプル送付</h3><p>ご相談したアイテム・数量で、御社宛に送付します。</p></div><div class="panel warm"><span class="klabel">Step 02</span><h3 style="margin:0 0 8px">使用感確認日</h3><p>〇/〇・〇/〇・〇/〇 で15分。スタッフ様の反応も確認します。</p></div><div class="panel"><span class="klabel">Step 03</span><h3 style="margin:0 0 8px">導入検討</h3><p>アイテム・時期・数量の3点を整理し、オンライン商談へ。</p></div></div><div class="hairline" style="margin-top:28px"></div><ul class="clean"><li>本日の内容だと、御社では<b>「＿＿＿＿の場面」</b>で福美水を試していただくのが一番自然だと感じました。</li><li>まずはサンプルをご確認いただき、使用感確認の日程だけ、この場で仮に押さえさせてください。</li></ul></div><div class="pagefoot"><span class="lab">Fukubisui ／ 福美人株式会社</span><span class="n"><b>14</b> / 14</span></div></div>`,title:"次のアクション",note:`クロージングは“決断”でなく“次の日程”を取る。\n\n「本日のお話だと、御社の場合は〇〇の場面で試していただくのが一番自然だと感じました。まずサンプルをお送りするので、使用感を確認するお時間だけ、仮でこの場で押さえさせてください」\n\n<strong>最終ゴールは「サンプル送付＋使用感確認日の確定＋3点」。</strong>ここまで取れれば商談化はほぼ握れている。`}
 ];
-
-const stage=document.getElementById('stage');
-slides.forEach((s,i)=>{const d=document.createElement('div');d.innerHTML=s.html;const el=d.firstElementChild;el.dataset.i=i;stage.appendChild(el);});
-const els=[...document.querySelectorAll('.slide')];
-const CH=('BroadcastChannel'in window)?new BroadcastChannel('fukubisui-deck'):null;
-const isPresenter=location.hash.indexOf('present')>=0;
-const N=slides.length;
-let cur=0;
-const INTERNAL=[12,13];               /* Slide13(商談中に確認すること) / Slide14(まとめ・次のアクション) は社内用 */
-function internalAt(i){return INTERNAL.indexOf(i)>=0;}
-const audienceIdx=[];for(let _k=0;_k<N;_k++){if(!internalAt(_k))audienceIdx.push(_k);}
-
-function fit(){const W=1280,H=720,pad=24;
-  if(window.innerWidth<=680){document.documentElement.style.setProperty('--s','1');return;}
-  const s=Math.min((window.innerWidth-pad*2)/W,(window.innerHeight-pad*2)/H);
-  document.documentElement.style.setProperty('--s',String(s));}
-
-function renderThumb(container,i){
-  if(!container)return;
-  container.innerHTML='';
-  const sc=document.createElement('div');sc.className='thumbScale';
-  sc.innerHTML=slides[i]?slides[i].html:'';
-  container.appendChild(sc);
-  const scale=container.clientWidth/1280;
-  sc.style.transform='scale('+scale+')';
-  container.style.height=(container.clientWidth*720/1280)+'px';}
-
-function paintAudience(){
-  els.forEach((e,k)=>e.classList.toggle('active',k===cur));
-  const pos=audienceIdx.indexOf(cur),tot=audienceIdx.length;
-  const pr=document.getElementById('prog');if(pr)pr.textContent=String(pos+1).padStart(2,'0')+' / '+String(tot).padStart(2,'0');
-  const bar=document.getElementById('bar');if(bar)bar.style.width=(((pos+1)/tot)*100)+'%';
-  const nt=document.getElementById('nt-title');if(nt)nt.textContent=(cur+1)+'. '+slides[cur].title;
-  const nb=document.getElementById('nt-body');if(nb)nb.innerHTML=slides[cur].note;
-  const a=els[cur];if(a)a.scrollTop=0;}
-
-function paintPresenter(){
-  document.getElementById('pcur').textContent=cur+1;
-  document.getElementById('ptitle').textContent=(cur+1)+'. '+slides[cur].title;
-  const cl=document.getElementById('curlabel');
-  if(cl){if(internalAt(cur)){cl.textContent='現在のスライド ／ 社内用（先方には直前のスライドが表示中）';cl.style.color='#E4B7AB';}else{cl.textContent='現在のスライド';cl.style.color='';}}
-  document.getElementById('pnote').innerHTML=slides[cur].note;
-  renderThumb(document.getElementById('thumbCur'),cur);
-  const hasNext=cur+1<N;
-  renderThumb(document.getElementById('thumbNext'),hasNext?cur+1:cur);
-  const nl=document.getElementById('nextlabel');if(nl)nl.textContent=hasNext?'次のスライド':'（最終スライド）';
-  const tn=document.getElementById('thumbNext');if(tn)tn.style.opacity=hasNext?'1':'.25';}
-
-function setIndex(i,doBroadcast){
-  i=Math.max(0,Math.min(N-1,i));
-  if(!isPresenter&&internalAt(i))return;   /* 先方画面には社内用スライドを出さない */
-  cur=i;
-  if(isPresenter)paintPresenter();else paintAudience();
-  if(doBroadcast!==false){if(CH)CH.postMessage({type:'goto',i:cur});try{localStorage.setItem('fukubisui_i',cur+':'+Date.now());}catch(e){}}}
-function go(d){if(isPresenter){setIndex(cur+d,true);return;}let i=cur;do{i+=d;}while(i>=0&&i<N&&internalAt(i));if(i<0||i>=N)return;setIndex(i,true);}
-window.go=go;
-
+const stage=document.getElementById('stage');slides.forEach((s,i)=>{const d=document.createElement('div');d.innerHTML=s.html;const el=d.firstElementChild;el.dataset.i=i;stage.appendChild(el);});
+const els=[...document.querySelectorAll('.slide')];const CH=('BroadcastChannel'in window)?new BroadcastChannel('fukubisui-deck'):null;const isPresenter=location.hash.indexOf('present')>=0;const N=slides.length;let cur=0;
+const INTERNAL=[12]; /* Slide13 ヒアリング項目のみ社内用 */
+function internalAt(i){return INTERNAL.indexOf(i)>=0;}const audienceIdx=[];for(let _k=0;_k<N;_k++){if(!internalAt(_k))audienceIdx.push(_k);}
+function fit(){const W=1280,H=720,pad=24;if(window.innerWidth<=680){document.documentElement.style.setProperty('--s','1');return;}const s=Math.min((window.innerWidth-pad*2)/W,(window.innerHeight-pad*2)/H);document.documentElement.style.setProperty('--s',String(s));}
+function renderThumb(container,i){if(!container)return;container.innerHTML='';const sc=document.createElement('div');sc.className='thumbScale';sc.innerHTML=slides[i]?slides[i].html:'';container.appendChild(sc);const scale=container.clientWidth/1280;sc.style.transform='scale('+scale+')';container.style.height=(container.clientWidth*720/1280)+'px';}
+function paintAudience(){els.forEach((e,k)=>e.classList.toggle('active',k===cur));const pos=audienceIdx.indexOf(cur),tot=audienceIdx.length;const pr=document.getElementById('prog');if(pr)pr.textContent=String(pos+1).padStart(2,'0')+' / '+String(tot).padStart(2,'0');const bar=document.getElementById('bar');if(bar)bar.style.width=(((pos+1)/tot)*100)+'%';const nt=document.getElementById('nt-title');if(nt)nt.textContent=(cur+1)+'. '+slides[cur].title;const nb=document.getElementById('nt-body');if(nb)nb.innerHTML=slides[cur].note;const a=els[cur];if(a){a.scrollTop=0;const foot=a.querySelector('.pagefoot .n');if(foot)foot.innerHTML='<b>'+String(pos+1).padStart(2,'0')+'</b> / '+String(tot).padStart(2,'0');}}
+function paintPresenter(){document.getElementById('pcur').textContent=cur+1;document.getElementById('ptitle').textContent=(cur+1)+'. '+slides[cur].title;const cl=document.getElementById('curlabel');if(cl){if(internalAt(cur)){cl.textContent='現在のスライド ／ 社内用（先方には直前のスライドが表示中）';cl.style.color='#E4B7AB';}else{cl.textContent='現在のスライド';cl.style.color='';}}document.getElementById('pnote').innerHTML=slides[cur].note;renderThumb(document.getElementById('thumbCur'),cur);const hasNext=cur+1<N;renderThumb(document.getElementById('thumbNext'),hasNext?cur+1:cur);const nl=document.getElementById('nextlabel');if(nl)nl.textContent=hasNext?'次のスライド':'（最終スライド）';const tn=document.getElementById('thumbNext');if(tn)tn.style.opacity=hasNext?'1':'.25';}
+function setIndex(i,doBroadcast){i=Math.max(0,Math.min(N-1,i));if(!isPresenter&&internalAt(i))return;cur=i;if(isPresenter)paintPresenter();else paintAudience();if(doBroadcast!==false){if(CH)CH.postMessage({type:'goto',i:cur});try{localStorage.setItem('fukubisui_i',cur+':'+Date.now());}catch(e){}}}
+function go(d){if(isPresenter){setIndex(cur+d,true);return;}let i=cur;do{i+=d;}while(i>=0&&i<N&&internalAt(i));if(i<0||i>=N)return;setIndex(i,true);}window.go=go;
 if(CH){CH.onmessage=(e)=>{const m=e.data||{};if(m.type==='goto')setIndex(m.i,false);else if(m.type==='hello'&&!isPresenter&&CH)CH.postMessage({type:'goto',i:cur});};}
 window.addEventListener('storage',(e)=>{if(e.key==='fukubisui_i'&&e.newValue){const i=parseInt(e.newValue.split(':')[0],10);if(!isNaN(i))setIndex(i,false);}});
-
-function toggleNotes(){const n=document.getElementById('notes');if(n)n.classList.toggle('open');}
-function fs(){if(!document.fullscreenElement){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}
-function openPresenter(){const url=location.href.split('#')[0]+'#presenter';window.open(url,'fukubisui_presenter','width=1180,height=760');}
-window.toggleNotes=toggleNotes;window.fs=fs;window.openPresenter=openPresenter;
-
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1);}
-  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}
-  else if(e.key.toLowerCase()==='n'){toggleNotes();}
-  else if(e.key.toLowerCase()==='f'){fs();}
-  else if(e.key.toLowerCase()==='p'){openPresenter();}
-  else if(e.key==='Home'){setIndex(isPresenter?0:audienceIdx[0],true);}
-  else if(e.key==='End'){setIndex(isPresenter?N-1:audienceIdx[audienceIdx.length-1],true);}});
-
-let sx=0,sy=0;
-stage.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6)go(dx<0?1:-1);},{passive:true});
-
-if(isPresenter){
-  document.body.classList.add('presenter-mode');
-  document.getElementById('pprev').onclick=()=>go(-1);
-  document.getElementById('pnext').onclick=()=>go(1);
-  const t0=Date.now();
-  function tick(){const s=Math.floor((Date.now()-t0)/1000);
-    document.getElementById('ptime').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
-    const d=new Date();document.getElementById('pclock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
-  tick();setInterval(tick,1000);
-  window.addEventListener('resize',()=>{renderThumb(document.getElementById('thumbCur'),cur);renderThumb(document.getElementById('thumbNext'),Math.min(cur+1,N-1));});
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(paintPresenter);
-  paintPresenter();
-  if(CH)CH.postMessage({type:'hello'});
-}else{
-  window.addEventListener('resize',fit);
-  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
-  fit();paintAudience();
-}
+function toggleNotes(){const n=document.getElementById('notes');if(n)n.classList.toggle('open');}function fs(){if(!document.fullscreenElement){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}function openPresenter(){const url=location.href.split('#')[0]+'#presenter';window.open(url,'fukubisui_presenter','width=1180,height=760');}window.toggleNotes=toggleNotes;window.fs=fs;window.openPresenter=openPresenter;
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1);}else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}else if(e.key.toLowerCase()==='n'){toggleNotes();}else if(e.key.toLowerCase()==='f'){fs();}else if(e.key.toLowerCase()==='p'){openPresenter();}else if(e.key==='Home'){setIndex(isPresenter?0:audienceIdx[0],true);}else if(e.key==='End'){setIndex(isPresenter?N-1:audienceIdx[audienceIdx.length-1],true);}});
+let sx=0,sy=0;stage.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6)go(dx<0?1:-1);},{passive:true});
+if(isPresenter){document.body.classList.add('presenter-mode');document.getElementById('pprev').onclick=()=>go(-1);document.getElementById('pnext').onclick=()=>go(1);const t0=Date.now();function tick(){const s=Math.floor((Date.now()-t0)/1000);document.getElementById('ptime').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');const d=new Date();document.getElementById('pclock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}tick();setInterval(tick,1000);window.addEventListener('resize',()=>{renderThumb(document.getElementById('thumbCur'),cur);renderThumb(document.getElementById('thumbNext'),Math.min(cur+1,N-1));});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(paintPresenter);paintPresenter();if(CH)CH.postMessage({type:'hello'});}else{window.addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);fit();paintAudience();}
 </script>
 </body>
 </html>
