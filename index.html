@@ -234,7 +234,7 @@ body.presenter-mode .stage,body.presenter-mode .hud,body.presenter-mode .hint,bo
   </header>
   <div class="pmain">
     <div class="pcurrent">
-      <div class="plabel">現在のスライド</div>
+      <div class="plabel" id="curlabel">現在のスライド</div>
       <div class="thumb" id="thumbCur"></div>
       <div class="pnav"><button id="pprev">◀ 前へ</button><button id="pnext">次へ ▶</button></div>
     </div>
@@ -279,11 +279,11 @@ note:`つかみは商品ではなく“場の定義”。\n\n「本日はお時�
 
 {html:`<div class="slide"><div class="eyebrow"><span class="en">Purpose</span><span class="jp">本日の目的</span></div>
   <div class="body">
-    <h2>商品紹介ではなく、<br>“貴社のお客様に合う利用シーン”を一緒に確認する場です</h2>
+    <h2>商品紹介ではなく、<br>“御社のお客様に合う利用シーン”を一緒に確認する場です</h2>
     <div class="hairline"></div>
     <ul class="clean">
       <li>成分やスペックの説明を聞いていただく時間ではありません。</li>
-      <li>貴社のお客様の肌ケア・物販・アメニティの<b>現状</b>をうかがい、福美水が自然に置ける場面があるかを見極めます。</li>
+      <li>御社のお客様の肌ケア・物販・アメニティの<b>現状</b>をうかがい、福美水が自然に置ける場面があるかを見極めます。</li>
     </ul>
     <div class="grid3" style="margin-top:26px">
       <div class="panel"><span class="klabel">Check 01</span><p>肌ケア・物販・アメニティまわりの現状</p></div>
@@ -305,7 +305,7 @@ note:`ゴールの握り。<strong>「今日は決めていただく場ではな
         <p>“施術後ケアの標準解”が、<br>業態を横断して<span class="em">存在していない</span></p>
         <div class="sub">敏感肌向け＝「守り」、美肌・エイジング＝「攻め」で分断され、施設側が全員に安心して案内できる共通ケアが空白のまま。</div></div>
     </div>
-    <div class="readout"><span class="drop">◇</span><span>商談の入口はこの一言：「施術後に肌が敏感になったお客様へ、記者では何を案内されていますか？」</span></div>
+    <div class="readout"><span class="drop">◇</span><span>商談の入口はこの一言：「施術後に肌が敏感になったお客様へ、御社では何を案内されていますか？」</span></div>
   </div>
   <div class="pagefoot"><span class="lab">Fukubisui</span><span class="n"><b>03</b> / 14</span></div></div>`,
 title:"業態共通の課題",
@@ -556,6 +556,9 @@ const CH=('BroadcastChannel'in window)?new BroadcastChannel('fukubisui-deck'):nu
 const isPresenter=location.hash.indexOf('present')>=0;
 const N=slides.length;
 let cur=0;
+const INTERNAL=[12,13];               /* Slide13(商談中に確認すること) / Slide14(まとめ・次のアクション) は社内用 */
+function internalAt(i){return INTERNAL.indexOf(i)>=0;}
+const audienceIdx=[];for(let _k=0;_k<N;_k++){if(!internalAt(_k))audienceIdx.push(_k);}
 
 function fit(){const W=1280,H=720,pad=24;
   if(window.innerWidth<=680){document.documentElement.style.setProperty('--s','1');return;}
@@ -574,8 +577,9 @@ function renderThumb(container,i){
 
 function paintAudience(){
   els.forEach((e,k)=>e.classList.toggle('active',k===cur));
-  const pr=document.getElementById('prog');if(pr)pr.textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
-  const bar=document.getElementById('bar');if(bar)bar.style.width=((cur+1)/N*100)+'%';
+  const pos=audienceIdx.indexOf(cur),tot=audienceIdx.length;
+  const pr=document.getElementById('prog');if(pr)pr.textContent=String(pos+1).padStart(2,'0')+' / '+String(tot).padStart(2,'0');
+  const bar=document.getElementById('bar');if(bar)bar.style.width=(((pos+1)/tot)*100)+'%';
   const nt=document.getElementById('nt-title');if(nt)nt.textContent=(cur+1)+'. '+slides[cur].title;
   const nb=document.getElementById('nt-body');if(nb)nb.innerHTML=slides[cur].note;
   const a=els[cur];if(a)a.scrollTop=0;}
@@ -583,6 +587,8 @@ function paintAudience(){
 function paintPresenter(){
   document.getElementById('pcur').textContent=cur+1;
   document.getElementById('ptitle').textContent=(cur+1)+'. '+slides[cur].title;
+  const cl=document.getElementById('curlabel');
+  if(cl){if(internalAt(cur)){cl.textContent='現在のスライド ／ 社内用（先方には直前のスライドが表示中）';cl.style.color='#E4B7AB';}else{cl.textContent='現在のスライド';cl.style.color='';}}
   document.getElementById('pnote').innerHTML=slides[cur].note;
   renderThumb(document.getElementById('thumbCur'),cur);
   const hasNext=cur+1<N;
@@ -591,10 +597,12 @@ function paintPresenter(){
   const tn=document.getElementById('thumbNext');if(tn)tn.style.opacity=hasNext?'1':'.25';}
 
 function setIndex(i,doBroadcast){
-  i=Math.max(0,Math.min(N-1,i));cur=i;
+  i=Math.max(0,Math.min(N-1,i));
+  if(!isPresenter&&internalAt(i))return;   /* 先方画面には社内用スライドを出さない */
+  cur=i;
   if(isPresenter)paintPresenter();else paintAudience();
   if(doBroadcast!==false){if(CH)CH.postMessage({type:'goto',i:cur});try{localStorage.setItem('fukubisui_i',cur+':'+Date.now());}catch(e){}}}
-function go(d){setIndex(cur+d,true);}
+function go(d){if(isPresenter){setIndex(cur+d,true);return;}let i=cur;do{i+=d;}while(i>=0&&i<N&&internalAt(i));if(i<0||i>=N)return;setIndex(i,true);}
 window.go=go;
 
 if(CH){CH.onmessage=(e)=>{const m=e.data||{};if(m.type==='goto')setIndex(m.i,false);else if(m.type==='hello'&&!isPresenter&&CH)CH.postMessage({type:'goto',i:cur});};}
@@ -611,8 +619,8 @@ document.addEventListener('keydown',e=>{
   else if(e.key.toLowerCase()==='n'){toggleNotes();}
   else if(e.key.toLowerCase()==='f'){fs();}
   else if(e.key.toLowerCase()==='p'){openPresenter();}
-  else if(e.key==='Home'){setIndex(0,true);}
-  else if(e.key==='End'){setIndex(N-1,true);}});
+  else if(e.key==='Home'){setIndex(isPresenter?0:audienceIdx[0],true);}
+  else if(e.key==='End'){setIndex(isPresenter?N-1:audienceIdx[audienceIdx.length-1],true);}});
 
 let sx=0,sy=0;
 stage.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
