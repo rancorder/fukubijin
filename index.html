@@ -16,10 +16,10 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 body{background:#DCE4DB;font-family:"Noto Sans JP",sans-serif;color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
-.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:2.4vw}
-.slide{position:absolute;width:min(1160px,94vw);height:min(658px,90vh);
+.stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--s,1));transform-origin:center center}
+.slide{position:absolute;inset:0;width:1280px;height:720px;
   background:radial-gradient(130% 100% at 88% -8%,rgba(138,164,145,.16),transparent 55%),radial-gradient(120% 120% at 0% 108%,rgba(191,164,105,.07),transparent 50%),var(--porcelain);
-  box-shadow:0 34px 90px -34px rgba(35,50,40,.55);padding:60px 74px 56px;display:none;flex-direction:column;
+  box-shadow:0 34px 90px -34px rgba(35,50,40,.55);padding:62px 92px 54px;display:none;flex-direction:column;
   opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1);overflow:hidden}
 .slide.active{display:flex;opacity:1;transform:none}
 .slide .botanical{position:absolute;right:-40px;bottom:-56px;width:340px;opacity:.09;pointer-events:none;color:var(--celadon-dk)}
@@ -71,12 +71,12 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
 .chip.hot{background:var(--sasa);color:#EAEFE7;border-color:var(--sasa)}
 .arw{color:var(--celadon);font-family:"Cormorant Garamond",serif;font-size:18px}
 .cover{padding:0}
-.cover .inner{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 74px}
+.cover .inner{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 92px}
 .cover .en-brand{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:22px;letter-spacing:.12em;color:var(--celadon-dk);margin-bottom:8px}
-.cover .en-sub{font-size:11px;letter-spacing:.42em;color:var(--gold);font-weight:500;margin-bottom:38px}
-.cover h1{font-size:66px;font-weight:500;letter-spacing:.05em;margin-bottom:26px;color:var(--sasa)}
-.cover .tag{font-family:"Shippori Mincho",serif;font-size:20px;color:var(--celadon-dk);line-height:1.85;font-weight:400;max-width:42ch}
-.cover .meta{margin-top:46px;font-size:12.5px;letter-spacing:.08em;color:var(--muted);line-height:2.1;font-weight:300}
+.cover .en-sub{font-size:11px;letter-spacing:.42em;color:var(--gold);font-weight:500;margin-bottom:22px}
+.cover h1{font-size:60px;font-weight:500;letter-spacing:.05em;margin-bottom:18px;color:var(--sasa)}
+.cover .tag{font-family:"Shippori Mincho",serif;font-size:19px;color:var(--celadon-dk);line-height:1.7;font-weight:400;max-width:42ch}
+.cover .meta{margin-top:26px;font-size:12.5px;letter-spacing:.08em;color:var(--muted);line-height:2;font-weight:300}
 .cover .meta .en{font-family:"Cormorant Garamond",serif;font-style:italic}
 .drop-mark{position:absolute;right:78px;top:64px;width:96px;height:96px;z-index:3}
 .drop-mark svg{width:100%;height:100%}
@@ -103,7 +103,7 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
 .notes .nt-body strong{color:#E4B7AB;font-weight:600}
 .notes .close{position:absolute;top:18px;right:20px;background:none;border:1px solid #3e4a41;color:#aeb8ac;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px}
 @media (max-width:680px){
-  .stage{padding:0}
+  .stage{position:fixed;left:0;top:0;transform:none;width:100%;height:auto;padding:0}
   .slide{
     inset:0;width:100%;max-width:100%;
     height:100vh;height:100dvh;max-height:none;
@@ -177,6 +177,34 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   .slide{justify-content:center}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.ripple{animation:none!important}}
+
+/* ===== presenter view ===== */
+#presenter{display:none}
+body.presenter-mode{overflow:hidden;background:#100E0C}
+body.presenter-mode #presenter{display:flex}
+body.presenter-mode .stage,body.presenter-mode .hud,body.presenter-mode .hint,body.presenter-mode .bar,body.presenter-mode .notes{display:none!important}
+.presenter{position:fixed;inset:0;flex-direction:column;color:#E7E1D4;font-family:"Noto Sans JP",sans-serif;padding:18px 22px 20px;gap:14px}
+.presenter header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #33372f;padding-bottom:12px;gap:16px}
+.presenter header .pnum{font-family:"Cormorant Garamond",serif;font-size:20px;letter-spacing:.1em;color:#C9A96A;white-space:nowrap}
+.presenter header .pnum b{color:#fff;font-size:26px}
+.presenter header .ptitle{font-family:"Shippori Mincho",serif;font-size:20px;color:#fff;flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.presenter header .ptimer{font-family:"Cormorant Garamond",serif;font-size:19px;color:#8AA491;letter-spacing:.08em;white-space:nowrap}
+.pmain{flex:1;display:grid;grid-template-columns:1.12fr 1fr;gap:22px;min-height:0}
+.pcurrent{display:flex;flex-direction:column;gap:14px;min-height:0}
+.plabel{font-size:10.5px;letter-spacing:.26em;color:#9aa08f;text-transform:uppercase;font-weight:700}
+.thumb{position:relative;width:100%;overflow:hidden;border:1px solid #3a3f36;background:#DCE4DB;border-radius:4px}
+.thumb .thumbScale{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:top left}
+.thumb .thumbScale .slide{position:absolute!important;inset:0!important;display:flex!important;opacity:1!important;transform:none!important;box-shadow:none!important}
+.pnav{display:flex;gap:10px}
+.pnav button{flex:1;background:#20261f;border:1px solid #3d4437;color:#E7E1D4;font-family:inherit;font-size:14px;font-weight:600;padding:12px;border-radius:6px;cursor:pointer;transition:.15s}
+.pnav button:hover{background:#2b3328;border-color:#5C7864}
+.pside{display:flex;flex-direction:column;gap:16px;min-height:0}
+.pnotesbox{flex:1;display:flex;flex-direction:column;min-height:0;background:#17150F;border:1px solid #33372f;border-radius:6px;padding:16px 18px}
+.pnoteBody{margin-top:10px;overflow-y:auto;font-size:16px;line-height:1.95;color:#D6D0C2;white-space:pre-line}
+.pnoteBody strong{color:#E4B7AB;font-weight:700}
+.pnextbox{flex:none}
+.pnextbox .thumb{max-width:340px}
+@media (max-width:900px){.pmain{grid-template-columns:1fr;overflow-y:auto}.pnextbox .thumb{max-width:100%}.presenter header .ptitle{display:none}}
 </style>
 </head>
 <body>
@@ -187,15 +215,41 @@ ul.clean li .accent{color:var(--petal);font-weight:600}
   <span class="prog" id="prog">01 / 14</span>
   <button onclick="go(1)">次へ ▶</button>
   <button onclick="toggleNotes()" title="発表者ノート (N)">ノート</button>
+  <button onclick="openPresenter()" title="発表者ビュー (P)">発表者</button>
   <button onclick="fs()" title="全画面 (F)">全画面</button>
 </div>
-<div class="hint">← → 移動 ／ N ノート ／ F 全画面</div>
+<div class="hint">← → 移動 ／ P 発表者ビュー ／ N ノート ／ F 全画面</div>
 <aside class="notes" id="notes">
   <button class="close" onclick="toggleNotes()">✕</button>
   <h4>Presenter Note</h4>
   <div class="nt-title" id="nt-title"></div>
   <div class="nt-body" id="nt-body"></div>
 </aside>
+
+<section id="presenter" class="presenter">
+  <header>
+    <div class="pnum"><b id="pcur">1</b> / 14</div>
+    <div class="ptitle" id="ptitle"></div>
+    <div class="ptimer">経過 <span id="ptime">00:00</span> ・ <span id="pclock"></span></div>
+  </header>
+  <div class="pmain">
+    <div class="pcurrent">
+      <div class="plabel">現在のスライド</div>
+      <div class="thumb" id="thumbCur"></div>
+      <div class="pnav"><button id="pprev">◀ 前へ</button><button id="pnext">次へ ▶</button></div>
+    </div>
+    <div class="pside">
+      <div class="pnotesbox">
+        <div class="plabel">台本 / スピーカーノート</div>
+        <div class="pnoteBody" id="pnote"></div>
+      </div>
+      <div class="pnextbox">
+        <div class="plabel" id="nextlabel">次のスライド</div>
+        <div class="thumb" id="thumbNext"></div>
+      </div>
+    </div>
+  </div>
+</section>
 <script>
 const LEAF = `<svg viewBox="0 0 300 300" fill="none" stroke="currentColor" stroke-width="1.4">
 <path d="M150 285 C150 200 150 120 150 40"/>
@@ -498,35 +552,91 @@ note:`クロージングは“決断”でなく“次の日程”を取る。\n
 const stage=document.getElementById('stage');
 slides.forEach((s,i)=>{const d=document.createElement('div');d.innerHTML=s.html;const el=d.firstElementChild;el.dataset.i=i;stage.appendChild(el);});
 const els=[...document.querySelectorAll('.slide')];
+const CH=('BroadcastChannel'in window)?new BroadcastChannel('fukubisui-deck'):null;
+const isPresenter=location.hash.indexOf('present')>=0;
+const N=slides.length;
 let cur=0;
-function show(i){
-  cur=Math.max(0,Math.min(slides.length-1,i));
+
+function fit(){const W=1280,H=720,pad=24;
+  if(window.innerWidth<=680){document.documentElement.style.setProperty('--s','1');return;}
+  const s=Math.min((window.innerWidth-pad*2)/W,(window.innerHeight-pad*2)/H);
+  document.documentElement.style.setProperty('--s',String(s));}
+
+function renderThumb(container,i){
+  if(!container)return;
+  container.innerHTML='';
+  const sc=document.createElement('div');sc.className='thumbScale';
+  sc.innerHTML=slides[i]?slides[i].html:'';
+  container.appendChild(sc);
+  const scale=container.clientWidth/1280;
+  sc.style.transform='scale('+scale+')';
+  container.style.height=(container.clientWidth*720/1280)+'px';}
+
+function paintAudience(){
   els.forEach((e,k)=>e.classList.toggle('active',k===cur));
-  document.getElementById('prog').textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
-  document.getElementById('bar').style.width=((cur+1)/slides.length*100)+'%';
-  document.getElementById('nt-title').textContent=(cur+1)+'. '+slides[cur].title;
-  document.getElementById('nt-body').innerHTML=slides[cur].note;
-}
-function go(d){show(cur+d)}
-function toggleNotes(){document.getElementById('notes').classList.toggle('open')}
-function fs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}else{document.exitFullscreen()}}
+  const pr=document.getElementById('prog');if(pr)pr.textContent=String(cur+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  const bar=document.getElementById('bar');if(bar)bar.style.width=((cur+1)/N*100)+'%';
+  const nt=document.getElementById('nt-title');if(nt)nt.textContent=(cur+1)+'. '+slides[cur].title;
+  const nb=document.getElementById('nt-body');if(nb)nb.innerHTML=slides[cur].note;
+  const a=els[cur];if(a)a.scrollTop=0;}
+
+function paintPresenter(){
+  document.getElementById('pcur').textContent=cur+1;
+  document.getElementById('ptitle').textContent=(cur+1)+'. '+slides[cur].title;
+  document.getElementById('pnote').innerHTML=slides[cur].note;
+  renderThumb(document.getElementById('thumbCur'),cur);
+  const hasNext=cur+1<N;
+  renderThumb(document.getElementById('thumbNext'),hasNext?cur+1:cur);
+  const nl=document.getElementById('nextlabel');if(nl)nl.textContent=hasNext?'次のスライド':'（最終スライド）';
+  const tn=document.getElementById('thumbNext');if(tn)tn.style.opacity=hasNext?'1':'.25';}
+
+function setIndex(i,doBroadcast){
+  i=Math.max(0,Math.min(N-1,i));cur=i;
+  if(isPresenter)paintPresenter();else paintAudience();
+  if(doBroadcast!==false){if(CH)CH.postMessage({type:'goto',i:cur});try{localStorage.setItem('fukubisui_i',cur+':'+Date.now());}catch(e){}}}
+function go(d){setIndex(cur+d,true);}
+window.go=go;
+
+if(CH){CH.onmessage=(e)=>{const m=e.data||{};if(m.type==='goto')setIndex(m.i,false);else if(m.type==='hello'&&!isPresenter&&CH)CH.postMessage({type:'goto',i:cur});};}
+window.addEventListener('storage',(e)=>{if(e.key==='fukubisui_i'&&e.newValue){const i=parseInt(e.newValue.split(':')[0],10);if(!isNaN(i))setIndex(i,false);}});
+
+function toggleNotes(){const n=document.getElementById('notes');if(n)n.classList.toggle('open');}
+function fs(){if(!document.fullscreenElement){if(document.documentElement.requestFullscreen)document.documentElement.requestFullscreen();}else{document.exitFullscreen();}}
+function openPresenter(){const url=location.href.split('#')[0]+'#presenter';window.open(url,'fukubisui_presenter','width=1180,height=760');}
+window.toggleNotes=toggleNotes;window.fs=fs;window.openPresenter=openPresenter;
+
 document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1)}
-  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1)}
-  else if(e.key.toLowerCase()==='n'){toggleNotes()}
-  else if(e.key.toLowerCase()==='f'){fs()}
-  else if(e.key==='Home'){show(0)} else if(e.key==='End'){show(slides.length-1)}
-});
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(1);}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(-1);}
+  else if(e.key.toLowerCase()==='n'){toggleNotes();}
+  else if(e.key.toLowerCase()==='f'){fs();}
+  else if(e.key.toLowerCase()==='p'){openPresenter();}
+  else if(e.key==='Home'){setIndex(0,true);}
+  else if(e.key==='End'){setIndex(N-1,true);}});
+
 let sx=0,sy=0;
 stage.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
-stage.addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)*1.6) go(dx<0?1:-1);
-},{passive:true});
-// keep the current slide scrolled to top when navigating
-const _show=show;
-window.show=show=function(i){_show(i);const a=els[cur];if(a)a.scrollTop=0;};
-show(0);
+stage.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.6)go(dx<0?1:-1);},{passive:true});
+
+if(isPresenter){
+  document.body.classList.add('presenter-mode');
+  document.getElementById('pprev').onclick=()=>go(-1);
+  document.getElementById('pnext').onclick=()=>go(1);
+  const t0=Date.now();
+  function tick(){const s=Math.floor((Date.now()-t0)/1000);
+    document.getElementById('ptime').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+    const d=new Date();document.getElementById('pclock').textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+  tick();setInterval(tick,1000);
+  window.addEventListener('resize',()=>{renderThumb(document.getElementById('thumbCur'),cur);renderThumb(document.getElementById('thumbNext'),Math.min(cur+1,N-1));});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(paintPresenter);
+  paintPresenter();
+  if(CH)CH.postMessage({type:'hello'});
+}else{
+  window.addEventListener('resize',fit);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  fit();paintAudience();
+}
 </script>
 </body>
 </html>
